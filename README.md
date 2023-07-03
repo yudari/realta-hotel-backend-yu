@@ -1,123 +1,34 @@
 # Hotel Realta Backend
 
-List nama username **Github** di Trello untuk diundang sebagai collaborator di project ini.
-
-## Clone Project
-
-Clone project ini dengan menggunakan perintah:
-
-```bash
-git clone https://github.com/juliansyahrifqi/realta-hotel-backend.git
-```
-
-Setelah clone project ini, buka di VS Code.
-
-## Instalasi dan Jalankan Project
-
-```bash
-npm install
-
-npm run start:dev
-```
-
-## Buat Branch Baru
-
-Setelah itu buat branch baru dengan perintah
-
-```bash
-git checkout -b  namamodule_namakamu
-```
-
-**Contoh**: `
-
-```
-git checkout -b payment_rustam
-```
-
-Buat kodingan untuk backend kalian.
-
-> Semua perubahan kode untuk masing-masing module di `commit` dan di `push` ke `branch` masing-masing (jangan ke `branch master`).
-> Setelah itu kalau ada keperluan untuk menyatukan project bisa melakukan `pull request` atau menghubungi Tama atau yang lain.
-
----
-
-## Aturan-aturan
-
-### Penamaan
-
-> **Jangan menggunakan nama yang kurang memberikan gambaran tentang variabel, nama method/function, isi file atau folder yang dikerjakan agar mudah dikenali atau dibaca oleh orang lain. Contoh:** `let terserah = 'terserah`, `nyoba-nyoba.controller.ts`, `jajang.service.ts`, atau `folderPunyaJajang`.
-
-1. Penamaan variabel menggunakan bahasa inggris dan menggunakan format **camelCase**.
-   Contoh: `const hotelName: string`
-
-2. Penamaan method/function menggunakan bahasa inggris dan menggunakan format **camelCase**.
-   Contoh: `const getAllUsers() {}`;
-
-3. Penamaan folder menggunakan nama bahasa inggris dan menggunakan format **camelCase**.
-   Contoh: `usersSchema`
-
-4. Nama folder untuk models menggunakan format `namaSchema`.
-   Contoh: `usersSchema`
-
-### Struktur Folder Models
-
-1. Struktur folder untuk models:
-
-```
-models/
-  ├── nama_schema (contoh: usersSchema)
-    ├── nama_tabel (contoh: users.ts)
-    ├── user_password.ts
-```
-
-. Pastikan ketika ketika generate models, output yang disimpan adalah seperti `models/nama_schema`. Contoh: `models/usersSchema`.
-
-> **Jangan menambahkan script di dalam `package.json` untuk menghindari konflik di kemudian hari. Lebih baik menggunakan `npx`. Contoh:**
-
-Install NPX
-
-```bash
-npm install -g npx
-```
-
-Lalu, untuk generate model, contoh:
-
-```bash
-npx stg -D postgres -o models/users_module -h localhost -p 5432 -d "HotelRealtaDB" -u postgres -x "your_password" --indices --associations-file association.csv --clean
-```
-
-### Struktur Folder Untuk Masing-masing Schema
-
-```
-src/
-  ├── nama_schema (contoh: usersSchema)
-    ├── users
-      ├── dto
-         ├── createUsers.dto.ts
-         ├── updateUsers.dto.ts
-      ├── users.controller.spec
-      ├── users.controller.ts
-      ├── users.module.ts
-      ├── users.service.spec
-      ├── users.service.ts
-```
-
-Ketika akan generate seperti module, service atau controllers, pastikan bahwa file yang kita generate tadi berada di folder sesuai dengan schema yang kita kerjakan.
-
-```bash
-nest g resources namaSchema/namaTabel
-```
-
-Contoh:
-
-```bash
-nest g resources usersSchema/users
-```
-
-Jika ada kebutuhan penambahan folder custom seperti untuk `guards`, `validation`, dll bisa disesuaikan.
-
-Namun apabila jika misalnya ada kebutuhan yang bisa dipakai oleh banyak schema seperti `konstanta`, `decorators` dan lainnya bisa disimpan pada folder `common`.
-
-### Penggunaan File .env
-
-Untuk file `.env` bisa buat file dengan nama `.env` dan bisa copy isinya dari file `.env.example`
+Untuk menggunakan RestAPI ini ada beberapa daftar environment pendukung yang harus di setting : 
+1. Install Postgre dan PGAdmin dan pastikan pengaturan yang harus dimiliki pada saat menset database : 
+   - DATABASE PORT = 5432 // Contoh
+   - DATABASE HOST = localhost // contoh atau bisa bebas
+   - DATABASE NAME = HotelRealtaDB
+   - DATABASE USER = postgres
+   - DB_PASSWORD = root
+2. Selanjutnya buatlah file .env  : 
+   - PORT= 5000
+   - DB_PORT=5432 
+   - DB_HOST=localhost 
+   - DB_NAME=HotelRealtaDB 
+   - DB_USER= postgres   
+   - DB_PASSWORD= root
+   - SECRET_KEY=hotelrealtabackendbatch220230126 // bisa diganti sesuaikan saja
+3. - kemudian jalankan query berikut agar menginsert data dummy kedalam database HotelRealtaDB : 
+   -> link : https://drive.google.com/file/d/1kc3IUwjDOj-x_dsE07n9GUTMjyljkhj5/view?usp=drive_link
+4. Kemudian jalankan perintah berikut di terminal agar menggenerate tabel-tabel pada postgres menjadi sebuah model didalam project : 
+   - "db_resto": "stg -D postgres -o models/restoSchema -h localhost -p 5432 -d HotelRealtaDB -u postgres -x 12345 --indices --associations-file association.csv -s resto",
+   - "db_hotels": "stg -D postgres -o models/hotelSchema -h localhost -p 5432 -s hotel -d HotelRealtaDB -u postgres -x 123456 --indices",
+   - "db_master": "stg -D postgres -o models/masterSchema -h localhost -s master -p 5432 -d HotelRealtaDB -u postgres -x 123456 --indices ",
+   - "db_user": "stg -D postgres -o models/usersSchema -h localhost -p 5432 -s users -d HotelRealtaDB -u postgres -x 123456 --indices",
+   - "pgScript": "stg -D postgres -o models/masterSchema -h localhost -p 5432 -d HotelRealtaDB -s master -u postgres -x root --indices --associations-file association.csv --clean",
+   - "pg:generate-payment": "stg -D postgres -o models/paymentSchema -s payment -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file ./association.csv ",
+   - "pg:generate-users": "stg -D postgres -o models/usersSchema -s users -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
+   - "pg:generate-booking": "stg -D postgres -o models/bookingSchema -s booking -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
+   - "pg:generate-resto": "stg -D postgres -o models/restoSchema -s resto -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
+   - "db_booking": "stg -D postgres -o models/bookingSchema -s booking --cm c -h localhost -p 5432 -d HotelRealtaDB -u postgres -x root --indices --associations-file association.csv --clean"
+5. Jalankan npm install pada terminal, kemudian setelah package telah terinstall kedalam node_modules.
+6. npm start:dev -> perintah untuk menjalankan project development, npm start:prod -> untuk production
+7. ketik http://localhost:5000/ kedalam search bar browser
+8. selesai
